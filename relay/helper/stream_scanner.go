@@ -34,6 +34,8 @@ func StreamScannerHandler(c *gin.Context, resp *http.Response, info *relaycommon
 		ticker   = time.NewTicker(streamingTimeout)
 	)
 
+	scanner.Buffer(make([]byte, 64*1024), 10*1024*1024) // 10 MB Buffer
+
 	defer func() {
 		ticker.Stop()
 		close(stopChan)
